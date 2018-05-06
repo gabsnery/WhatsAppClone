@@ -2,9 +2,14 @@ package whatsappclone.cursoandroid.com.whatsappclone;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.solver.widgets.Snapshot;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,80 +20,44 @@ import whatsappclone.cursoandroid.com.whatsappclone.POJO.Produto;
 import whatsappclone.cursoandroid.com.whatsappclone.POJO.Usuario;
 
 public class MainActivity extends Activity {
-  /* 
-    private DatabaseReference ReferenciaDataBase = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference usuarioRef = ReferenciaDataBase.child("usuarios");
-    private DatabaseReference produtoRef = ReferenciaDataBase.child("produtos");*/
 
-
+    private FirebaseAuth firebaseAutenticacao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    /*    Usuario usuario = new Usuario();
-        usuario.setNome("Ana Helena");
-        usuario.setSobrenome("Silva");
-        usuario.setSexo("Feminino");
-        usuario.setIdade(22);
+        firebaseAutenticacao = FirebaseAuth.getInstance();
 
-        Produto produto = new Produto();
-        produto.setDescricao("celular");
-        produto.setCor("rosa");
-        produto.setFabricante("Samsung");
-
-        produtoRef.child("001").setValue(produto);
-
-        produtoRef.addChildEventListener(new ChildEventListener() {
+        firebaseAutenticacao.signInWithEmailAndPassword("gneri94@gmail.com","novaSenha123")
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.i("FIREBASE",dataSnapshot.toString().toString());
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){//se usuario criado com sucesso
+                    Log.i("login","SUCESSO"+task.getException());
+                }else{//usuario nao criado com sucesso
+                    Log.i("login","NÃO SUCESSO"+task.getException());
+                }
             }
         });
-        usuarioRef.addChildEventListener(new ChildEventListener() {
+
+        firebaseAutenticacao.signOut();;
+        //verifica usuario logdo
+        if (firebaseAutenticacao.getCurrentUser() != null){
+            Log.i("VerificaUsuario",firebaseAutenticacao.getCurrentUser().toString());
+        }else{
+            Log.i("VerificaUsuario","Usuario não logado");
+        }
+        //cadastro
+        /*firebaseAutenticacao.createUserWithEmailAndPassword("gneri94@gmail.com","novaSenha123")
+                .addOnCompleteListener(MainActivity.this,new OnCompleteListener<AuthResult>() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.i("FIREBASE_USU",dataSnapshot.toString().toString());
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){//se usuario criado com sucesso
+                    Log.i("criacao","SUCESSO");
+                }else{//usuario nao criado com sucesso
+                    Log.i("criacao","NÃO SUCESSO");
+                }
             }
         });*/
 
