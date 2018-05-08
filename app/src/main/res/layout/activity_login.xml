@@ -50,12 +50,12 @@
         android:textColor="@color/textColorPrimary"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="@+id/editTextNome"
-        app:layout_constraintStart_toEndOf="@+id/editText4"
+        app:layout_constraintStart_toEndOf="@+id/editTextDDD"
         app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
 
     <EditText
-        android:id="@+id/editTextDDD"
-        android:layout_width="61dp"
+        android:id="@+id/editTextCodPais"
+        android:layout_width="49dp"
         android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -68,8 +68,8 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
 
     <EditText
-        android:id="@+id/editText4"
-        android:layout_width="59dp"
+        android:id="@+id/editTextDDD"
+        android:layout_width="43dp"
         android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -78,7 +78,7 @@
         android:hint="011"
         android:inputType="phone"
         android:textColor="@color/textColorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/editTextDDD"
+        app:layout_constraintStart_toEndOf="@+id/editTextCodPais"
         app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
 
     <Button
@@ -94,6 +94,6 @@
         android:text="@string/botao_cadastrar"
         app:layout_constraintEnd_toEndOf="@+id/editTextTelefone"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/editTextDDD"
+        app:layout_constraintStart_toStartOf="@+id/editTextCodPais"
         app:layout_constraintTop_toBottomOf="@+id/editTextTelefone" />
 </android.support.constraint.ConstraintLayout>
