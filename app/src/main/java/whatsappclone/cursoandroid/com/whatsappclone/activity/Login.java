@@ -2,41 +2,42 @@ package whatsappclone.cursoandroid.com.whatsappclone.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.constraint.solver.widgets.Snapshot;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import whatsappclone.cursoandroid.com.whatsappclone.POJO.Produto;
-import whatsappclone.cursoandroid.com.whatsappclone.POJO.Usuario;
+import java.util.HashMap;
+import java.util.Random;
+
 import whatsappclone.cursoandroid.com.whatsappclone.R;
+import whatsappclone.cursoandroid.com.whatsappclone.helper.Preferences;
 
 public class Login extends Activity {
 
-    private EditText editTextTelefone;
+    private EditText editTextPhone;
     private EditText editTextDDD;
     private EditText editTextCodigoPais;
-
+    private EditText editTextName;
+    private Button cadastrar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextTelefone = (EditText) findViewById(R.id.editTextTelefone);
+        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextDDD = (EditText) findViewById(R.id.editTextDDD);
         editTextCodigoPais = (EditText) findViewById(R.id.editTextCodPais);
+        editTextName = (EditText) findViewById(R.id.editTextName);
 
-        SimpleMaskFormatter simpleMaskTelefone = new SimpleMaskFormatter("NNNNN-NNNN");
-        MaskTextWatcher maskTelefone = new MaskTextWatcher(editTextTelefone, simpleMaskTelefone);
-        editTextTelefone.addTextChangedListener(maskTelefone);
+        cadastrar = (Button) findViewById(R.id.buttonCadastrar);
+
+        SimpleMaskFormatter simpleMaskPhone = new SimpleMaskFormatter("NNNNN-NNNN");
+        MaskTextWatcher maskPhone = new MaskTextWatcher(editTextPhone, simpleMaskPhone);
+        editTextPhone.addTextChangedListener(maskPhone);
 
         SimpleMaskFormatter simpleMaskDDD = new SimpleMaskFormatter("NN");
         MaskTextWatcher maskDDD = new MaskTextWatcher(editTextDDD, simpleMaskDDD);
@@ -45,5 +46,44 @@ public class Login extends Activity {
         SimpleMaskFormatter simpleMaskCodPais = new SimpleMaskFormatter("+NN");
         MaskTextWatcher maskCodPais = new MaskTextWatcher(editTextCodigoPais, simpleMaskCodPais);
         editTextCodigoPais.addTextChangedListener(maskCodPais);
+
+        cadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userName = editTextName.getText().toString();
+
+                String phone =
+                        editTextCodigoPais.getText().toString() +
+                        editTextDDD.getText().toString() +
+                        editTextPhone.getText().toString();
+                phone = phone.replace("+","");
+                phone = phone.replace("(","");
+                phone = phone.replace(")","");
+                phone = phone.replace("-","");
+
+                Log.i("Phone",phone);
+                // O IDEAL É GERAR O TOKEN EM UM SERVIDOR
+                //TOKEN GERADO PELO SERVIDOR
+                //ENVIADO DO SERVIDOR PARA CELULAR
+                //APP ENVIA TOKEN DIGITADO
+                //SERVIDOR RESPONDE SE É VALIDO OU NÃO
+                //PODE SER FEITO COM PHP POR EXEMPLO
+                Random random = new Random();
+
+                int numeroValidador = random.nextInt(9999 - 1000) + 1000;
+
+                String token = String.valueOf(numeroValidador);
+
+                Log.i("Token",token);
+
+                Preferences preferences = new Preferences(Login.this);
+                preferences.saveUserPreferences(userName,phone,token);
+
+                HashMap<String,String> usuario = preferences.getDataUser();
+
+                Log.i("token","T:"+usuario.get("token"));
+            }
+        });
     }
 }
