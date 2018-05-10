@@ -1,6 +1,10 @@
 package whatsappclone.cursoandroid.com.whatsappclone.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -110,5 +114,30 @@ public class Login extends Activity {
             return false;
         }
         return true;
+    }
+
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+            for(int resultado : grantResults){
+                if (resultado == PackageManager.PERMISSION_DENIED){
+                    alertValidPermission();
+                }
+            }
+        }
+    }
+
+    private void alertValidPermission(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permissões negadas");
+        builder.setMessage("Para utilizar esse app, é necessário aceitar as permissões");
+
+        builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
     }
 }
