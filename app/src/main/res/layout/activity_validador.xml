@@ -21,13 +21,15 @@
 
     <EditText
         android:id="@+id/editTextValidar"
-        android:layout_width="wrap_content"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
         android:ems="10"
         android:hint="Digite o código"
-        android:inputType="textPersonName"
+        android:inputType="number"
+        android:textAlignment="center"
         android:singleLine="true"
+        android:textColor="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,5 +75,6 @@
         app:layout_constraintEnd_toEndOf="@+id/editTextValidar"
         app:layout_constraintStart_toStartOf="@+id/editTextValidar"
         app:layout_constraintTop_toBottomOf="@+id/editTextValidar" />
+
 
 </android.support.constraint.ConstraintLayout>

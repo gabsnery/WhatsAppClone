@@ -3,6 +3,7 @@ package whatsappclone.cursoandroid.com.whatsappclone.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
@@ -99,7 +101,17 @@ public class Login extends Activity {
 
                 //Envio SMS
                 boolean sended = sendSMS("+"+phone,"WhatsApp code validation:  "+token);
-                /*
+
+                if (sended){
+                    Intent intent = new Intent( Login.this,ValidadorActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(Login.this,"Problema ao enviar SMS, tente novamente!",Toast.LENGTH_LONG).show();
+                }
+  /*
+
+
                 HashMap<String,String> usuario = preferences.getDataUser();
                 Log.i("token","T:"+usuario.get("token"));*/
             }
