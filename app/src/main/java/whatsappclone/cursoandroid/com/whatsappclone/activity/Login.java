@@ -103,8 +103,8 @@ public class Login extends Activity {
                 boolean sended = sendSMS("+"+phone,"WhatsApp code validation:  "+token);
 
                 if (sended){
-                    Intent intent = new Intent( Login.this,ValidadorActivity.class);
-                    startActivity(intent);
+              //      Intent intent = new Intent( Login.this,ValidadorActivity.class);
+               //     startActivity(intent);
                     finish();
                 }else {
                     Toast.makeText(Login.this,"Problema ao enviar SMS, tente novamente!",Toast.LENGTH_LONG).show();
@@ -151,5 +151,11 @@ public class Login extends Activity {
             }
         });
         builder.show();
+    }
+
+    public void abrirCadastroUsuario(View view){
+
+        Intent intent = new Intent(Login.this,CadastroUsuarioActivity.class);
+        startActivity(intent);
     }
 }
