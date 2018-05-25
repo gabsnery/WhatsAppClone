@@ -23,7 +23,7 @@ import java.util.Random;
 
 import whatsappclone.cursoandroid.com.whatsappclone.Manifest;
 import whatsappclone.cursoandroid.com.whatsappclone.R;
-import whatsappclone.cursoandroid.com.whatsappclone.config.configuracaoFirebase;
+import whatsappclone.cursoandroid.com.whatsappclone.config.ConfiguracaoFirebase;
 import whatsappclone.cursoandroid.com.whatsappclone.helper.Permission;
 import whatsappclone.cursoandroid.com.whatsappclone.helper.Preferences;
 
@@ -36,7 +36,7 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        referenciaFirebase = configuracaoFirebase.getFirebase();
+        referenciaFirebase = ConfiguracaoFirebase.getFirebase();
         referenciaFirebase.child("pontos").setValue("800");
     }
 

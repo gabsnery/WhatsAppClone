@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import whatsappclone.cursoandroid.com.whatsappclone.POJO.Produto;
 import whatsappclone.cursoandroid.com.whatsappclone.POJO.Usuario;
 import whatsappclone.cursoandroid.com.whatsappclone.R;
-import whatsappclone.cursoandroid.com.whatsappclone.config.configuracaoFirebase;
+import whatsappclone.cursoandroid.com.whatsappclone.config.ConfiguracaoFirebase;
 
 public class MainActivity extends Activity {
 
@@ -25,7 +25,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
        // referenciaFirebase.child("pontos").setValue("100");
     }
