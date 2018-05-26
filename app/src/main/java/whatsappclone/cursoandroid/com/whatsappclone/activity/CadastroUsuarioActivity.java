@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
@@ -54,6 +57,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private  void cadastrarUsuario(){
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutentication();
+
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),
                 usuario.getSenha()
@@ -65,8 +69,25 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
                     usuario.setId(task.getResult().getUser().getUid());
                     usuario.Salvar();
+
+                    autenticacao.signOut();
+                    finish();
                 }else{
-                    Toast.makeText(CadastroUsuarioActivity.this,"ERROU",Toast.LENGTH_SHORT).show();
+
+                    String erroException = "";
+
+                    try{
+                        throw task.getException();
+                    }catch (FirebaseAuthWeakPasswordException e){
+                        erroException = "Digite uma senha mais forte, contendo mais caracteres e com letras e números!";
+                    }catch (FirebaseAuthInvalidCredentialsException e) {
+                        erroException = "Credenciais inválidas!";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        erroException = "Esse e-mail já está em uso no APP";
+                    } catch (Exception e) {
+                        erroException = "Erro ao efetuar o cadastro!";
+                    }
+                    Toast.makeText(CadastroUsuarioActivity.this,"Erro: "+ erroException,Toast.LENGTH_SHORT).show();
                 }
             }
         });
