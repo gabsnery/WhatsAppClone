@@ -68,6 +68,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="@+id/edit_cadastro_senha"
         app:layout_constraintStart_toStartOf="@+id/edit_cadastro_senha"
