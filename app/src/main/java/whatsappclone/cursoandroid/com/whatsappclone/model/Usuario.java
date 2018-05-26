@@ -9,7 +9,7 @@ public class Usuario {
     private  String id;
     private  String nome;
     private  String email;
-    private  String senha;
+    private  String Password;
 
 
     public Usuario() {
@@ -51,11 +51,11 @@ public class Usuario {
     }
 
     @Exclude
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return Password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 }

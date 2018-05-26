@@ -24,7 +24,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private EditText nome;
     private EditText email;
-    private EditText senha;
+    private EditText Password;
     private Button botaoCadastrar;
     private Usuario usuario;
     private FirebaseAuth autenticacao;
@@ -36,7 +36,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
         nome = (EditText) findViewById(R.id.edit_cadastro_usuario);
         email = (EditText) findViewById(R.id.edit_cadastro_email);
-        senha = (EditText) findViewById(R.id.edit_cadastro_senha);
+        Password = (EditText) findViewById(R.id.edit_cadastro_Password);
         botaoCadastrar = (Button) findViewById(R.id.buttonCadastrarUsu);
 
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +46,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario = new Usuario();
                 usuario.setNome(nome.getText().toString());
                 usuario.setEmail(email.getText().toString());
-                usuario.setSenha(senha.getText().toString());
+                usuario.setPassword(Password.getText().toString());
 
                 cadastrarUsuario();
 
@@ -57,39 +57,42 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private  void cadastrarUsuario(){
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutentication();
+        try{
+            autenticacao.createUserWithEmailAndPassword(
+                    usuario.getEmail(),
+                    usuario.getPassword()
+            ).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(CadastroUsuarioActivity.this,"SUCESSO",Toast.LENGTH_SHORT).show();
 
-        autenticacao.createUserWithEmailAndPassword(
-                usuario.getEmail(),
-                usuario.getSenha()
-        ).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(CadastroUsuarioActivity.this,"SUCESSO",Toast.LENGTH_SHORT).show();
+                        usuario.setId(task.getResult().getUser().getUid());
+                        usuario.Salvar();
 
-                    usuario.setId(task.getResult().getUser().getUid());
-                    usuario.Salvar();
+                        autenticacao.signOut();
+                        finish();
+                    }else{
 
-                    autenticacao.signOut();
-                    finish();
-                }else{
+                        String erroException = "";
 
-                    String erroException = "";
-
-                    try{
-                        throw task.getException();
-                    }catch (FirebaseAuthWeakPasswordException e){
-                        erroException = "Digite uma senha mais forte, contendo mais caracteres e com letras e números!";
-                    }catch (FirebaseAuthInvalidCredentialsException e) {
-                        erroException = "Credenciais inválidas!";
-                    } catch (FirebaseAuthUserCollisionException e) {
-                        erroException = "Esse e-mail já está em uso no APP";
-                    } catch (Exception e) {
-                        erroException = "Erro ao efetuar o cadastro!";
+                        try{
+                            throw task.getException();
+                        }catch (FirebaseAuthWeakPasswordException e){
+                            erroException = "Digite uma Password mais forte, contendo mais caracteres e com letras e números!";
+                        }catch (FirebaseAuthInvalidCredentialsException e) {
+                            erroException = "Credenciais inválidas!";
+                        } catch (FirebaseAuthUserCollisionException e) {
+                            erroException = "Esse e-mail já está em uso no APP";
+                        } catch (Exception e) {
+                            erroException = "Erro ao efetuar o cadastro!";
+                        }
+                        Toast.makeText(CadastroUsuarioActivity.this,"Erro: "+ erroException,Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(CadastroUsuarioActivity.this,"Erro: "+ erroException,Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            Toast.makeText(CadastroUsuarioActivity.this,"Erro: "+ e.toString(),Toast.LENGTH_SHORT).show();
+        }
     }
 }

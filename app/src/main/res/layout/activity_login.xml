@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/edit_signIn_email"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -38,7 +38,7 @@
 
 
     <EditText
-        android:id="@+id/editTextSenha"
+        android:id="@+id/edit_signIn_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -52,11 +52,11 @@
         android:textColor="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_signIn_email" />
 
 
     <Button
-        android:id="@+id/buttonCadastrar"
+        android:id="@+id/buttonLogar"
         android:layout_width="0dp"
         android:layout_height="49dp"
         android:layout_marginEnd="24dp"
@@ -65,10 +65,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/botao_cadastrar"
+        android:text="@string/botao_logar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSenha" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_signIn_password" />
 
     <TextView
         android:id="@+id/textView"
@@ -79,6 +79,6 @@
         android:text="Não tem conta? Cadastre-se"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCadastrar" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogar" />
 
 </android.support.constraint.ConstraintLayout>
