@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.DatabaseReference;
 
 import whatsappclone.cursoandroid.com.whatsappclone.R;
@@ -21,7 +23,7 @@ import whatsappclone.cursoandroid.com.whatsappclone.model.Usuario;
 
 public class Login extends Activity {
 
-    private DatabaseReference referenciaFirebase ;
+   // private DatabaseReference referenciaFirebase ;
 
     private EditText email;
     private EditText password;
@@ -35,7 +37,9 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        referenciaFirebase = ConfiguracaoFirebase.getFirebase();
+       // referenciaFirebase = ConfiguracaoFirebase.getFirebase();
+
+        verifyUserLog();
 
         botaoLogar = (Button) findViewById(R.id.buttonLogar);
         email = (EditText) findViewById(R.id.edit_signIn_email);
@@ -68,14 +72,39 @@ public class Login extends Activity {
 
                 if(task.isSuccessful()){
                     Toast.makeText(Login.this,"SUCESSO",Toast.LENGTH_SHORT).show();
-
+                    openPrimaryWindow();
                 }else{
 
-                    Toast.makeText(Login.this,"erro",Toast.LENGTH_SHORT).show();
+                    String erro = "";
+                    try{
+                        throw task.getException();
+                    } catch (FirebaseAuthInvalidUserException e) {
+                        erro = "Usuario não encontrado!";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        erro = "Senha invalida!";
+                    }catch (Exception e){
+                        erro = "Erro ao logar!";
+                    }
+                    Toast.makeText(Login.this,"Erro: "+erro,Toast.LENGTH_LONG).show();
                 }
 
             }
         });
+    }
+
+    private void verifyUserLog(){
+        authenti = ConfiguracaoFirebase.getFirebaseAutentication();
+
+        if(authenti.getCurrentUser() != null){
+            openPrimaryWindow();
+        }
+
+    }
+    private void openPrimaryWindow(){
+
+        Intent  intent = new Intent(Login.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void abrirCadastroUsuario(View view){
