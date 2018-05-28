@@ -65,8 +65,7 @@ public class Login extends Activity {
         authenti = ConfiguracaoFirebase.getFirebaseAutentication();
         authenti.signInWithEmailAndPassword(
                 user.getEmail(),
-                user.getPassword()
-        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                user.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -74,7 +73,6 @@ public class Login extends Activity {
                     Toast.makeText(Login.this,"SUCESSO",Toast.LENGTH_SHORT).show();
                     openPrimaryWindow();
                 }else{
-
                     String erro = "";
                     try{
                         throw task.getException();
