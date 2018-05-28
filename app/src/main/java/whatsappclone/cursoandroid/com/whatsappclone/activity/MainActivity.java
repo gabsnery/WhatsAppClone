@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.solver.widgets.Snapshot;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,19 +24,24 @@ import whatsappclone.cursoandroid.com.whatsappclone.POJO.Usuario;
 import whatsappclone.cursoandroid.com.whatsappclone.R;
 import whatsappclone.cursoandroid.com.whatsappclone.config.ConfiguracaoFirebase;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private Button buttonQuit;
     private FirebaseAuth auth;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("WhatsApp");
+        setSupportActionBar(toolbar);
        // referenciaFirebase.child("pontos").setValue("100");
 
-        buttonQuit = (Button) findViewById(R.id.button_quit);
+     /*   buttonQuit = (Button) findViewById(R.id.button_quit);
 
         buttonQuit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +54,13 @@ public class MainActivity extends Activity {
                 startActivity(intent);
 
             }
-        });
+        });*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main,menu);
+        return true;
     }
 }
