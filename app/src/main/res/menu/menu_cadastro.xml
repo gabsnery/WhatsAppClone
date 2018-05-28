@@ -11,4 +11,10 @@
         android:title="@string/item_quit"
         android:orderInCategory="200"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item_search"
+        android:title="@string/item_search"
+        android:orderInCategory="300"
+        app:showAsAction="ifRoom" />
 </menu>
