@@ -90,7 +90,7 @@ public class Login extends Activity {
             }
         });
         }catch (Exception e){
-            Toast.makeText(Login.this,"Erro: "+ e.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this,"Dados inválidos!",Toast.LENGTH_SHORT).show();
         }
     }
 
