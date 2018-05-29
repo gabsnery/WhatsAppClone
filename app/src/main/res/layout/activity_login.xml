@@ -68,7 +68,9 @@
         android:text="@string/botao_logar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_signIn_password" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_signIn_password"
+        android:theme="@style/botaoPadrao"
+        />
 
     <TextView
         android:id="@+id/textView"

@@ -9,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -36,25 +38,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        auth = ConfiguracaoFirebase.getFirebaseAutentication();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("WhatsApp");
         setSupportActionBar(toolbar);
-       // referenciaFirebase.child("pontos").setValue("100");
-
-     /*   buttonQuit = (Button) findViewById(R.id.button_quit);
-
-        buttonQuit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                auth = ConfiguracaoFirebase.getFirebaseAutentication();
-                auth.signOut();
-
-                Intent intent = new Intent(MainActivity.this,Login.class);
-                startActivity(intent);
-
-            }
-        });*/
     }
 
     @Override
@@ -63,4 +51,27 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main,menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_quit:
+                sighOutUser();
+                return true;
+            case R.id.item_search:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void sighOutUser(){
+
+        auth.signOut();
+
+        Intent intent = new Intent(MainActivity.this,Login.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

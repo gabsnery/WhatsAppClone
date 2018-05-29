@@ -63,6 +63,7 @@ public class Login extends Activity {
 
     private void authenticateLogin(){
         authenti = ConfiguracaoFirebase.getFirebaseAutentication();
+        try{
         authenti.signInWithEmailAndPassword(
                 user.getEmail(),
                 user.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -88,6 +89,9 @@ public class Login extends Activity {
 
             }
         });
+        }catch (Exception e){
+            Toast.makeText(Login.this,"Erro: "+ e.toString(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void verifyUserLog(){
