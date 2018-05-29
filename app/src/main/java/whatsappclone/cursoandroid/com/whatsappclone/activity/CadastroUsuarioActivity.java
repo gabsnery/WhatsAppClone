@@ -48,36 +48,36 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setEmail(email.getText().toString());
                 usuario.setPassword(Password.getText().toString());
 
-                cadastrarUsuario();
+                cadastrarUsuario();//cadastra usuario
 
             }
         });
     }
 
-    private  void cadastrarUsuario(){
+    private  void cadastrarUsuario(){ //cadastra usuario
 
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutentication();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutentication(); //retorna a autenticaçao do firebase
         try{
-            autenticacao.createUserWithEmailAndPassword(
+            autenticacao.createUserWithEmailAndPassword( // cria usuario de acordo com o email e senha digitado
                     usuario.getEmail(),
                     usuario.getPassword()
             ).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                public void onComplete(@NonNull Task<AuthResult> task) {  //quando o processo terminar
                     if(task.isSuccessful()){
                         Toast.makeText(CadastroUsuarioActivity.this,"SUCESSO",Toast.LENGTH_SHORT).show();
 
-                        usuario.setId(task.getResult().getUser().getUid());
-                        usuario.Salvar();
+                        usuario.setId(task.getResult().getUser().getUid()); // seta no objeto Usuario o Id que foi incluido no Firebase
+                        usuario.Salvar(); //salva no "banco de dados" os dados do usuario cadastrado (nome, email, Id)
 
-                        autenticacao.signOut();
-                        finish();
+                        autenticacao.signOut(); // desloga o usuario que acabou de ser criado
+                        finish(); // volta para tela de login
                     }else{
 
                         String erroException = "";
 
                         try{
-                            throw task.getException();
+                            throw task.getException();  //dispara uma exceção e testa de acordo com as exceções do firebase
                         }catch (FirebaseAuthWeakPasswordException e){
                             erroException = "Digite uma Password mais forte, contendo mais caracteres e com letras e números!";
                         }catch (FirebaseAuthInvalidCredentialsException e) {

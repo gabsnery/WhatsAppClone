@@ -13,8 +13,6 @@ public class Usuario {
 
 
     public Usuario() {
-
-
     }
 
 
@@ -22,7 +20,6 @@ public class Usuario {
 
         DatabaseReference reference = ConfiguracaoFirebase.getFirebase();
         reference.child("usuarios").child(getId()).setValue(this);
-
     }
 
     @Exclude

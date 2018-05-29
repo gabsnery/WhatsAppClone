@@ -54,25 +54,23 @@ public class Login extends Activity {
                 user.setEmail(email.getText().toString());
                 user.setPassword(password.getText().toString());
 
-                authenticateLogin();
+                authenticateLogin();// autentica o usuario
             }
         });
 
     }
 
-
-    private void authenticateLogin(){
+    private void authenticateLogin(){  // autentica o usuario
         authenti = ConfiguracaoFirebase.getFirebaseAutentication();
         try{
-        authenti.signInWithEmailAndPassword(
+        authenti.signInWithEmailAndPassword( // metodo que loga por usuario e senha
                 user.getEmail(),
                 user.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(@NonNull Task<AuthResult> task) {//quando o processo estiver completo
 
-                if(task.isSuccessful()){
-                    Toast.makeText(Login.this,"SUCESSO",Toast.LENGTH_SHORT).show();
-                    openPrimaryWindow();
+                if(task.isSuccessful()){ // se o login foi sucesso
+                    openPrimaryWindow(); // abre a tela de usuario logado
                 }else{
                     String erro = "";
                     try{
@@ -94,22 +92,22 @@ public class Login extends Activity {
         }
     }
 
-    private void verifyUserLog(){
+    private void verifyUserLog(){ //verifica se já existe um usuario logado
         authenti = ConfiguracaoFirebase.getFirebaseAutentication();
 
-        if(authenti.getCurrentUser() != null){
-            openPrimaryWindow();
+        if(authenti.getCurrentUser() != null){ //se for diferente de null é porque está logado. Então abre outra tela
+            openPrimaryWindow(); // abre a tela de usuario logado
         }
 
     }
-    private void openPrimaryWindow(){
 
+    private void openPrimaryWindow(){ // abre a tela de usuario logado
         Intent  intent = new Intent(Login.this,MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void abrirCadastroUsuario(View view){
+    public void abrirCadastroUsuario(View view){ //Se usuario clicou em "não possui conta. Vai abrir a tela de cadastro"
 
         Intent intent = new Intent(Login.this,CadastroUsuarioActivity.class);
         startActivity(intent);
